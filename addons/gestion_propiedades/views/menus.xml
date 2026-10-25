@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_cb_root" name="Propiedades" sequence="10"/>
+    <menuitem id="menu_cb_propiedades" name="Propiedades"
+              parent="menu_cb_root" action="action_cb_propiedad" sequence="10"/>
+</odoo>

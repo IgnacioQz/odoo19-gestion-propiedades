@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_cb_propiedad_list" model="ir.ui.view">
+        <field name="name">cb.propiedad.list</field>
+        <field name="model">cb.propiedad</field>
+        <field name="arch" type="xml">
+            <list string="Propiedades"
+                  decoration-success="estado == 'disponible'"
+                  decoration-warning="estado == 'reservada'"
+                  decoration-muted="estado == 'vendida'">
+                <field name="name"/>
+                <field name="codigo"/>
+                <field name="tipo"/>
+                <field name="partner_id"/>
+                <field name="precio_uf"/>
+                <field name="superficie_m2"/>
+                <field name="precio_uf_m2"/>
+                <field name="estado"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_cb_propiedad_form" model="ir.ui.view">
+        <field name="name">cb.propiedad.form</field>
+        <field name="model">cb.propiedad</field>
+        <field name="arch" type="xml">
+            <form string="Propiedad">
+                <header>
+                    <button name="action_reservar" type="object" string="Reservar"
+                            class="btn-primary" invisible="estado != 'disponible'"/>
+                    <button name="action_vender" type="object" string="Marcar vendida"
+                            class="btn-primary" invisible="estado != 'reservada'"/>
+                    <button name="action_disponibilizar" type="object"
+                            string="Volver a disponible"
+                            invisible="estado == 'disponible'"/>
+                    <field name="estado" widget="statusbar"
+                           statusbar_visible="disponible,reservada,vendida"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name"/></h1>
+                    </div>
+                    <group>
+                        <group string="General">
+                            <field name="codigo"/>
+                            <field name="tipo"/>
+                            <field name="partner_id"/>
+                            <field name="agente_id"/>
+                            <field name="fecha_publicacion"/>
+                        </group>
+                        <group string="Valores">
+                            <field name="precio_uf"/>
+                            <field name="superficie_m2"/>
+                            <field name="precio_uf_m2"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Notas" name="notas">
+                            <field name="notas"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_cb_propiedad_search" model="ir.ui.view">
+        <field name="name">cb.propiedad.search</field>
+        <field name="model">cb.propiedad</field>
+        <field name="arch" type="xml">
+            <search string="Buscar propiedades">
+                <field name="name"/>
+                <field name="codigo"/>
+                <field name="partner_id"/>
+                <filter name="disponibles" string="Disponibles"
+                        domain="[('estado', '=', 'disponible')]"/>
+                <group>
+                    <filter name="group_tipo" string="Tipo"
+                            context="{'group_by': 'tipo'}"/>
+                    <filter name="group_estado" string="Estado"
+                            context="{'group_by': 'estado'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_cb_propiedad" model="ir.actions.act_window">
+        <field name="name">Propiedades</field>
+        <field name="res_model">cb.propiedad</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>

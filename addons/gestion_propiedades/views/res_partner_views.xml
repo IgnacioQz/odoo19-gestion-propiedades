@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_partner_form_inherit_propiedades" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit.propiedades</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_ver_propiedades" type="object"
+                        class="oe_stat_button" icon="fa-home"
+                        invisible="propiedad_count == 0">
+                    <field name="propiedad_count" widget="statinfo"
+                           string="Propiedades"/>
+                </button>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="Propiedades" name="propiedades">
+                    <field name="propiedad_ids"/>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>
